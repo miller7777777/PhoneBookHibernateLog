@@ -18,6 +18,7 @@ public class PhoneBook extends Observable{
     private int choose;
     private DAO dao;
     private DAOlog daoLog;
+    private LogGui logGui;
 //    private Log log;
 
     public void start(){
@@ -27,6 +28,8 @@ public class PhoneBook extends Observable{
         reader = new BufferedReader(new InputStreamReader(System.in));
         dao = new DAO();
         daoLog = new DAOlog();
+
+
 //        Log log = new Log();
 
         while (true){
@@ -94,6 +97,10 @@ public class PhoneBook extends Observable{
 
         ArrayList<Log> list = null;
         list = daoLog.showLog();
+
+        logGui = new LogGui(list);
+
+        logGui.build();
 
         System.out.println("All contacts:");
         System.out.println("");
