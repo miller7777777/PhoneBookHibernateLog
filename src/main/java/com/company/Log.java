@@ -58,6 +58,6 @@ public class Log implements Observer {
     @Override
     public String toString(){
 
-        return  id + " " + time + " " + event;
+        return  id + " \t" + time + " \t" + event;
     }
 }

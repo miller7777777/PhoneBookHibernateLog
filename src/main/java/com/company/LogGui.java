@@ -11,6 +11,7 @@ public class LogGui {
 
     JTextArea textArea;
     ArrayList<Log> list;
+    JScrollPane scrollBar;
 
     public LogGui(ArrayList<Log> list) {
         this.list = list;
@@ -20,20 +21,30 @@ public class LogGui {
 
         JFrame frame = new JFrame("Log");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setBounds(200, 200, 400, 300);
+        frame.setBounds(200, 200, 600, 400);
 
         textArea = new JTextArea();
+        scrollBar = new JScrollPane(textArea);
 
-        frame.getContentPane().add(BorderLayout.CENTER, textArea);
+
+        frame.getContentPane().add(BorderLayout.CENTER, scrollBar);
+//        frame.getContentPane().add(scrollBar);
         frame.setVisible(true);
+
+        String s = "";
 
 
 
             for (int i = 0; i < list.size(); i++) {
 
-                String s = list.get(i).toString() + "\n";
-                textArea.setText(s);
+                String s1 = list.get(i).toString() + "\n";
+                s = s + s1;
             }
+
+        textArea.setText(s);
+
+
+
 
 
 

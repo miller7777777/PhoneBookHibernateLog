@@ -86,6 +86,7 @@ public class DAO {
             session.beginTransaction();
             contacts = (ArrayList<Contact>)session.createCriteria(Contact.class).list();
 
+
         }catch (Exception e){
             e.printStackTrace();
         }finally {

@@ -43,6 +43,8 @@ public class DAOlog {
             session = factory.openSession();
             session.beginTransaction();
             logList = (ArrayList<Log>)session.createCriteria(Log.class).list();
+
+
         } catch (HibernateException e) {
             e.printStackTrace();
         } finally {
