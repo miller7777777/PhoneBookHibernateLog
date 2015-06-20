@@ -4,7 +4,7 @@ package com.company;
 
 import javax.persistence.*;
 import java.util.Observable;
-import java.util.Observer;
+
 
 /**
  * Created by mille_000 on 10.06.2015.
@@ -59,5 +59,9 @@ public class Log implements Observer {
     public String toString(){
 
         return  id + " \t" + time + " \t" + event;
+    }
+
+    public void update() {
+
     }
 }

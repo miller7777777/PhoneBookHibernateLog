@@ -19,6 +19,9 @@ public class PhoneBook extends Observable{
     private DAO dao;
     private DAOlog daoLog;
     private LogGui logGui;
+    protected ArrayList<LogGui> windows;
+    int logGuiCount = 0; //счетчик открытых окон;
+
 //    private Log log;
 
     public void start(){
@@ -28,6 +31,7 @@ public class PhoneBook extends Observable{
         reader = new BufferedReader(new InputStreamReader(System.in));
         dao = new DAO();
         daoLog = new DAOlog();
+        windows = new ArrayList<LogGui>();
 
 
 //        Log log = new Log();
@@ -96,11 +100,15 @@ public class PhoneBook extends Observable{
 //        Заглушка: метод, открывающий граф.интерфейс и грузящий туда лог
 
         ArrayList<Log> list = null;
-        list = daoLog.showLog();
 
-        logGui = new LogGui(list);
+        list = daoLog.showLog();
+        logGuiCount++;
+
+        logGui = new LogGui(list, logGuiCount);
+
 
         logGui.build();
+        windows.add(logGui);
 
         System.out.println("All contacts:");
         System.out.println("");
@@ -237,6 +245,7 @@ public class PhoneBook extends Observable{
 
             String message = "New contact (name = " + name + ") added.";
             daoLog.addEvent(new Log(time(), message));
+            logUpdate();
 
 
 
@@ -253,8 +262,19 @@ public class PhoneBook extends Observable{
     private String time(){
 
         long curTime = System.currentTimeMillis();
-        String curStringDate = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(curTime);
+        String curStringDate = new SimpleDateFormat("dd.MM.yyyy   HH:mm:ss").format(curTime);
         return curStringDate;
+    }
+
+    private void logUpdate(){
+
+        if (windows.size() > 0) {
+            for (int i = 0; i < windows.size(); i++) {
+
+                windows.get(i).updateLogGui();
+
+            }
+        }
     }
 
 

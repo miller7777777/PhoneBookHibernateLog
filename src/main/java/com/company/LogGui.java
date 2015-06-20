@@ -12,14 +12,20 @@ public class LogGui {
     JTextArea textArea;
     ArrayList<Log> list;
     JScrollPane scrollBar;
+    int logGuiCount; //счетчик открытых окон;
+    String s = "";
 
-    public LogGui(ArrayList<Log> list) {
+    public LogGui(ArrayList<Log> list, int logGuiCount) {
         this.list = list;
+        this.logGuiCount = logGuiCount;
+
     }
 
     public void build(){
 
-        JFrame frame = new JFrame("Log");
+        s = "Log " + logGuiCount;
+
+        JFrame frame = new JFrame(s);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setBounds(200, 200, 600, 400);
 
@@ -31,27 +37,42 @@ public class LogGui {
 //        frame.getContentPane().add(scrollBar);
         frame.setVisible(true);
 
+        outputLog();
+  //      scrollBar.getViewport().scrollRectToVisible(new Rectangle(textArea.getWidth(),textArea.getHeight(),1,1));
+        textArea.setCaretPosition(textArea.getText().length());
+
+//        String s = "";
+//
+//
+//
+//            for (int i = 0; i < list.size(); i++) {
+//
+//                String s1 = list.get(i).toString() + "\n";
+//                s = s + s1;
+//            }
+//
+//        textArea.setText(s);
+
+    }
+
+    public  void updateLogGui(){
+
+        textArea.setText("");
+        outputLog();
+
+    }
+
+    public void outputLog(){
         String s = "";
 
 
 
-            for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
 
-                String s1 = list.get(i).toString() + "\n";
-                s = s + s1;
-            }
+            String s1 = "  " + list.get(i).toString() + "\n";
+            s = s + s1;
+        }
 
         textArea.setText(s);
-
-
-
-
-
-
-
-
-
-
-
     }
 }

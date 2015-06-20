@@ -32,6 +32,7 @@ public class DAOlog {
                 session.close();
             }
         }
+
     }
 
     public ArrayList<Log> showLog(){
