@@ -32,7 +32,6 @@ public class DAO {
         }finally {
             if(session != null && session.isOpen())
             session.close();
-//            factory.close();
 
         }
     }
@@ -44,12 +43,9 @@ public class DAO {
 
         try{
             session = factory.openSession();
-//            session.beginTransaction();
             contact = (Contact) session.load(Contact.class, id);
             Hibernate.initialize(contact);
-//            session.getTransaction().commit();
 
-            //
 
         }catch (Exception e){
             e.printStackTrace();
@@ -67,10 +63,10 @@ public class DAO {
             session.beginTransaction();
             Query query = (Query) session.createQuery("FROM Contact WHERE phone = :phone").setString("phone", phone);
             contact = (Contact) query.uniqueResult();
-//            Hibernate.initialize(contact);
             session.getTransaction().commit();
         }catch (Exception e){
             e.printStackTrace();
+            return null;
         }finally {
             if (session != null && session.isOpen())
                 session.close();
@@ -126,7 +122,6 @@ public class DAO {
         updateContact.setName(contact.getName());
         updateContact.setPhone(contact.getPhone());
         updateContact.setEmail(contact.getEmail());
-//        Contact contact = getContactByPhone(phone);
         try{
             session = factory.openSession();
             session.beginTransaction();

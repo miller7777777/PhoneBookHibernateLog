@@ -110,7 +110,8 @@ public class PhoneBook extends Observable{
         logGui.build();
         windows.add(logGui);
 
-        System.out.println("All contacts:");
+        System.out.println("");
+        System.out.println("Log:");
         System.out.println("");
 
         for (int i = 0; i < list.size(); i++) {
@@ -121,6 +122,7 @@ public class PhoneBook extends Observable{
         System.out.println("");
         String message = "Log showed.";
         daoLog.addEvent(new Log(time(), message));
+        logUpdate();
     }
 
     private void close() {
@@ -142,6 +144,10 @@ public class PhoneBook extends Observable{
 
             String phone = reader.readLine();
             Contact contact = dao.getContactByPhone(phone);
+            if(contact == null){
+                System.out.println("Contact not found!");
+                return;
+            }
             System.out.println("Contact:");
             System.out.println(contact.toString());
             System.out.println("");
@@ -163,8 +169,11 @@ public class PhoneBook extends Observable{
 
 
 
+
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            logUpdate();
         }
     }
 
@@ -184,6 +193,9 @@ public class PhoneBook extends Observable{
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            logUpdate();
         }
 
 
@@ -205,6 +217,7 @@ public class PhoneBook extends Observable{
         System.out.println("");
         String message = "All contacts showed.";
         daoLog.addEvent(new Log(time(), message));
+        logUpdate();
 
     }
 
@@ -225,6 +238,9 @@ public class PhoneBook extends Observable{
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            logUpdate();
         }
 
     }
@@ -268,10 +284,14 @@ public class PhoneBook extends Observable{
 
     private void logUpdate(){
 
+        System.out.printf("windows.size() = " + windows.size());
+
         if (windows.size() > 0) {
             for (int i = 0; i < windows.size(); i++) {
 
                 windows.get(i).updateLogGui();
+
+//                windows.get(i).textArea.setText("Putin - hui!");
 
             }
         }
