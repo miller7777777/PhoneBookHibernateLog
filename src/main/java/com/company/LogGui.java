@@ -3,11 +3,13 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by mille_000 on 10.06.2015.
  */
-public class LogGui {
+public class LogGui implements Observer{
 
     protected JTextArea textArea;
 
@@ -69,5 +71,10 @@ public class LogGui {
         textArea.setText(s);
         textArea.setCaretPosition(textArea.getText().length());//Устанавливаем курсор на последнюю строку;
 
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        outputLog(list);
     }
 }

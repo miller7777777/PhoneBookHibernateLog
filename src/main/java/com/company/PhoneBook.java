@@ -19,6 +19,7 @@ public class PhoneBook extends Observable{
     private DAO dao;
     private DAOlog daoLog;
     private LogGui logGui;
+    private ArrayList<Log> list;
     protected ArrayList<LogGui> windows;
     int logGuiCount = 0; //счетчик открытых окон;
 
@@ -97,17 +98,19 @@ public class PhoneBook extends Observable{
     }
 
     private void showLog() {
-//        Заглушка: метод, открывающий граф.интерфейс и грузящий туда лог
 
-        ArrayList<Log> list = null;
+        list = null;
 
         list = daoLog.showLog();
         logGuiCount++;
 
-        logGui = new LogGui(list, logGuiCount);
+        LogGui logGui = new LogGui(list, logGuiCount);
+
+
 
 
         logGui.build();
+        addObserver(logGui);
         windows.add(logGui);
 
         System.out.println("");
@@ -122,7 +125,9 @@ public class PhoneBook extends Observable{
         System.out.println("");
         String message = "Log showed.";
         daoLog.addEvent(new Log(time(), message));
-        logUpdate();
+        list = daoLog.showLog();
+        super.setChanged();
+        notifyObservers(list);
     }
 
     private void close() {
@@ -166,6 +171,9 @@ public class PhoneBook extends Observable{
             dao.updateContact(c, contact.getId());
             String message = "Contact id= " + contact.getId() + " updated.";
             daoLog.addEvent(new Log(time(), message));
+            list = daoLog.showLog();
+            super.setChanged();
+            notifyObservers(list);
 
 
 
@@ -173,7 +181,6 @@ public class PhoneBook extends Observable{
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
-            logUpdate();
         }
     }
 
@@ -190,34 +197,37 @@ public class PhoneBook extends Observable{
             System.out.println("");
             String message = contact.toString() + " finded by phone" ;
             daoLog.addEvent(new Log(time(), message));
+            list = daoLog.showLog();
+            super.setChanged();
+            notifyObservers(list);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        finally {
-            logUpdate();
-        }
+
 
 
     }
 
     private void showAll() {
 
-        ArrayList<Contact> list = null;
-        list = dao.getAllContacts();
+        ArrayList<Contact> listOfContact = null;
+        listOfContact = dao.getAllContacts();
 
         System.out.println("All contacts:");
         System.out.println("");
 
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < listOfContact.size(); i++) {
 
-            System.out.println(list.get(i).toString());
+            System.out.println(listOfContact.get(i).toString());
 
         }
         System.out.println("");
         String message = "All contacts showed.";
         daoLog.addEvent(new Log(time(), message));
-        logUpdate();
+        list = daoLog.showLog();
+        super.setChanged();
+        notifyObservers(list);
 
     }
 
@@ -235,13 +245,14 @@ public class PhoneBook extends Observable{
             System.out.println("");
             String message = contact.toString() + " deleted.";
             daoLog.addEvent(new Log(time(), message));
+            list = daoLog.showLog();
+            super.setChanged();
+            notifyObservers(list);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        finally {
-            logUpdate();
-        }
+
 
     }
 
@@ -261,7 +272,9 @@ public class PhoneBook extends Observable{
 
             String message = "New contact (name = " + name + ") added.";
             daoLog.addEvent(new Log(time(), message));
-            logUpdate();
+            list = daoLog.showLog();
+            super.setChanged();
+            notifyObservers(list);
 
 
 
@@ -282,20 +295,7 @@ public class PhoneBook extends Observable{
         return curStringDate;
     }
 
-    private void logUpdate(){
 
-        System.out.printf("windows.size() = " + windows.size());
-
-        if (windows.size() > 0) {
-            for (int i = 0; i < windows.size(); i++) {
-
-                windows.get(i).updateLogGui();
-
-//                windows.get(i).textArea.setText("Putin - hui!");
-
-            }
-        }
-    }
 
 
 }

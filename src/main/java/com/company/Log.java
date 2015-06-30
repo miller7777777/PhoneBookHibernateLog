@@ -3,7 +3,7 @@ package com.company;
 
 
 import javax.persistence.*;
-import java.util.Observable;
+
 
 
 /**
@@ -11,7 +11,7 @@ import java.util.Observable;
  */
 @Entity
 @Table(name = "log_table")
-public class Log implements Observer {
+public class Log{
 
     private int id;
     private String time;
@@ -51,9 +51,7 @@ public class Log implements Observer {
         this.event = event;
     }
 
-    public void update(Observable o, Object arg) {
 
-    }
 
     @Override
     public String toString(){
@@ -61,7 +59,5 @@ public class Log implements Observer {
         return  id + " \t" + time + " \t" + event;
     }
 
-    public void update() {
 
-    }
 }

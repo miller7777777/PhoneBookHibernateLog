@@ -7,10 +7,11 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by mille_000 on 10.06.2015.
  */
-public class DAOlog {
+public class DAOlog{
 
     private SessionFactory factory;
 
@@ -31,6 +32,7 @@ public class DAOlog {
             if (session != null && session.isOpen()) {
                 session.close();
             }
+
         }
 
     }
